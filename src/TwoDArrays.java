@@ -9,4 +9,13 @@ public class TwoDArrays {
 
         return 0;
     }
+
+    /*
+    public static int[][] squareArray(int num) {
+
+    }
+
+     */
+
+
 }
