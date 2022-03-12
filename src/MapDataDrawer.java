@@ -88,48 +88,43 @@ public class MapDataDrawer {
      */
     public int drawLowestElevPath(Graphics g, int row) {
         int place = row;
-        int up;
         int front;
+        int up;
         int down;
-        int temp;
+        int past;
         int change = 0;
-        int tempPast;
         g.fillRect(0, place, 1, 1);
-
         for (int i = 1; i < grid[0].length; i++) {
-            tempPast = grid[place][i - 1];
+            past = grid[place][i - 1];
             if (place == 0) {
                 front = grid[place][i];
                 down = grid[place + 1][i];
-                if (down < front) {
+                if (Math.abs(past - front) > Math.abs(past - down)) {
                     place++;
                 }
             } else if (place == grid.length - 1) {
                 up = grid[place - 1][i];
                 front = grid[place][i];
-                if (up < front) {
+                if (Math.abs(past - front) > Math.abs(past - up)) {
                     place--;
                 }
             } else {
                 up = grid[place - 1][i];
                 front = grid[place][i];
                 down = grid[place + 1][i];
-                if (up < front && up < down) {
+                if (Math.abs(past - up) < Math.abs(past - front) && Math.abs(past - up) < Math.abs(past - down)) {
                     place--;
-                } else if (down < front && down < up) {
+                } else if (Math.abs(past - down) < Math.abs(past - front) && Math.abs(past - down) < Math.abs(past - up)) {
                     place++;
-                } else if(up == down && up < front) {
+                } else if (Math.abs(past - down) == Math.abs(past - up) && Math.abs(past - up) < Math.abs(past - front)) {
                     if (Math.random() > .5) {
-                        place--;
-                        System.out.println("TIE: UP");
-                    } else {
                         place++;
-                        System.out.println("TIE: DOWN");
+                    } else {
+                        place--;
                     }
                 }
             }
-            temp = grid[place][i];
-            change += Math.abs(temp - tempPast);
+            change += Math.abs(past - grid[place][i]);
             g.fillRect(i, place, 1, 1);
         }
         return change;
